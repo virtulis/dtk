@@ -7,6 +7,7 @@
 		"moduleResolution": "node"
 	},
 	"include": [
-		"./dtk.ts"
+		"./dtk.ts",
+		"./src/**/*.ts"
 	]
 }
