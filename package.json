@@ -7,12 +7,22 @@
 		"url": "http://very.lv"
 	},
 	"description": "TypeScript DOM Toolkit",
-	"main": "./dtk.js",
-	"types": "./dtk.ts",
-	"module": "./dtk.js",
+	"main": "./dist/dtk.js",
+	"types": "./dist/dtk.d.ts",
+	"module": "./dist/dtk.mjs",
+	"scripts": {
+		"build": "npx tsc-both && npx webpack --display errors-only",
+		"prepare": "npm run build"
+	},
 	"repository": {
 		"url": "https://bitbucket.org/verypositive/dtk",
 		"type": "hg"
 	},
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"source-map-loader": "^0.2.3",
+		"tsc-both": "0.1.x",
+		"typescript": "^2.9.1",
+		"webpack": "^4.11.1"
+	}
 }

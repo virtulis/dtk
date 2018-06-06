@@ -1,13 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "esnext",
+		"module": "commonjs",
 		"target": "esnext",
+		"rootDir": "./src",
+		"outDir": "./dist",
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "node"
 	},
 	"include": [
-		"./dtk.ts",
 		"./src/**/*.ts"
 	]
 }

@@ -1,2 +1,5 @@
-\.js$
-\.js.map$
+\.m?js$
+\.m?js.map$
+^node_modules/
+^dist/
+^package-lock.json$
