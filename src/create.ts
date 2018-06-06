@@ -1,7 +1,7 @@
 export function create<
 	TN extends keyof HTMLElementTagNameMap,
 	T extends HTMLElementTagNameMap[TN]
-	>(
+>(
 	tag: TN,
 	clsOrProps?: string | { [key in keyof T]?: T[key] },
 	children?: Element[] | string

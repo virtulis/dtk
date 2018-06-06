@@ -3,7 +3,7 @@ import { query } from './impl/query';
 export function list<
 	TN extends keyof HTMLElementTagNameMap,
 	T extends HTMLElementTagNameMap[TN]
-	>(
+>(
 	el: Element,
 	tag: TN,
 	selectors?: string
@@ -16,7 +16,7 @@ export function list(
 export function list<
 	TN extends keyof HTMLElementTagNameMap,
 	T extends HTMLElementTagNameMap[TN]
-	>(
+>(
 	tag: TN,
 	selectors?: string
 ): T[];

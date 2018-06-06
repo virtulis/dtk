@@ -15,7 +15,7 @@ export interface HandlerOptions extends AddEventListenerOptions {
 export function on<
 	EN extends keyof HTMLElementEventMap,
 	ET extends HTMLElementEventMap[EN]
-	>(
+>(
 	el: HTMLElement,
 	event: EN,
 	handler: (e: ET & EventTargetFix) => void,
@@ -24,7 +24,7 @@ export function on<
 export function on<
 	EN extends keyof HTMLElementEventMap,
 	ET extends HTMLElementEventMap[EN]
-	>(
+>(
 	el: HTMLElement,
 	event: EN,
 	object: object,
@@ -34,7 +34,7 @@ export function on<
 export function on<
 	EN extends keyof HTMLElementEventMap,
 	ET extends HTMLElementEventMap[EN]
-	>(
+>(
 	el: HTMLElement,
 	event: EN,
 	filter: string,
@@ -44,7 +44,7 @@ export function on<
 export function on<
 	EN extends keyof HTMLElementEventMap,
 	ET extends HTMLElementEventMap[EN]
-	>(
+>(
 	el: HTMLElement,
 	event: EN,
 	filter: string,
