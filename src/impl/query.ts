@@ -1,20 +1,23 @@
 function invokeQuery(
 	el: Element,
 	all: boolean,
-	trs: string
-) {
+	trs: string | string[]
+): HTMLElement | HTMLElement[] | null {
+
+	const joined = typeof trs == 'string';
 
 	if (trs[0] != '>') {
-		return all ? Array.from(el.querySelectorAll(trs)) as HTMLElement[] : el.querySelector(trs) as HTMLElement;
+		const jtrs = joined ? trs as string : (trs as string[]).join(' ');
+		return all
+			? Array.from(el.querySelectorAll(jtrs)) as HTMLElement[]
+			: el.querySelector(jtrs) as HTMLElement | null;
 	}
 
 	let out: HTMLElement[] = [];
 
-	// FIXME multiple selectors
-
-	const split = trs.substr(1).trim().split(' ');
+	const split = joined ? (trs as string).substr(1).trim().split(' ') : (trs as string[]).slice(1);
 	const top = split[0];
-	const rest = split.length > 1 ? split.slice(1).join(' ') : null;
+	const rest = split.length > 1 ? split.slice(1) : null;
 	const children = el.children;
 
 	for (let l = children.length, i = 0; i < l; i++) {
@@ -25,11 +28,10 @@ function invokeQuery(
 			out.push(child as HTMLElement);
 		}
 		else {
-			const matches = child.querySelectorAll(rest);
-			for (let mi = 0, ml = matches.length; mi < ml; mi++) {
-				if (!all) return matches[i] as HTMLElement;
-				out.push(matches[i] as HTMLElement);
-			}
+			const match = invokeQuery(child, all, rest);
+			if (!match) continue;
+			if (all) for (let gc of (match as HTMLElement[])) out.push(gc);
+			else return match;
 		}
 	}
 
@@ -38,13 +40,23 @@ function invokeQuery(
 }
 
 export function query(
+	all: true,
+	arg1?: Element | string,
+	arg2?: string,
+	arg3?: string
+): HTMLElement[];
+export function query(
+	all: false,
+	arg1?: Element | string,
+	arg2?: string,
+	arg3?: string
+): HTMLElement | null;
+export function query(
 	all: boolean,
 	arg1?: Element | string,
 	arg2?: string,
 	arg3?: string
 ) {
-
-	const fn = all ? 'querySelector' : 'querySelectorAll';
 
 	let el: Element;
 	let tag: string | void;
@@ -64,16 +76,58 @@ export function query(
 		sel = arg3;
 	}
 
-	if (!tag) return invokeQuery(el, all, '*'); // This will break if a falsy tag is passed, don't care
+	const ress: Element[][] = [];
 
-	if (!sel) return invokeQuery(el, all, tag); // Note that "tag" might also contain a selector here which will work too
+	let either;
+	if (tag && sel) {
 
-	const trs = sel.trim();
+		const lctag = tag.toLowerCase();
+		const ssels = sel.split(',').map(s => s.trim())
 
-	if (trs.match(/^\w/)) return invokeQuery(el, all, trs);
+		for (let ssel of ssels) {
 
-	if (trs[0] == '>') return invokeQuery(el, all, trs); // FIXME
+			const sparts = ssel.split(/\s+/g);
+			const lidx = sparts.length - 1;
+			const last = sparts[lidx];
 
-	return invokeQuery(el, all, tag + trs);
+			const ltm = last.match(/^(\*|\w+)/);
+			const ltag = ltm && ltm[0];
+			if (!ltag) sparts[lidx] = tag + last;
+			else if (ltag == '*') sparts[lidx] = tag;
+			else if (ltag.toLowerCase() != lctag) throw new Error('Tag was passed (' + tag + ') but selector begins with other tag (' + ltag + ')');
+
+			const res = invokeQuery(el, all, sparts);
+			if (!all && res) return res;
+
+			if (res && (res as Element[]).length) ress.push(res as Element[]);
+
+		}
+
+	}
+	else if (either = tag || sel) {
+
+		const ssels = either.split(',').map(s => s.trim());
+
+		for (let ssel of ssels) {
+
+			const res = invokeQuery(el, all, ssel);
+			if (!all && res) return res;
+
+			if (res && (res as Element[]).length) ress.push(res as Element[]);
+
+		}
+
+	}
+	else {
+
+		return invokeQuery(el, all, '*');
+
+	}
+
+	if (!all) return null;
+
+	if (ress.length == 1) return ress[0];
+	else if (!ress.length) return [];
+	else return Array.from(new Set(([] as Element[]).concat(...ress)));
 
 }

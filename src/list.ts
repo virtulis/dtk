@@ -28,6 +28,6 @@ export function list(
 	arg1?: Element | string,
 	arg2?: string,
 	arg3?: string
-) {
+): HTMLElement[] {
 	return query(true, arg1, arg2, arg3);
 }
