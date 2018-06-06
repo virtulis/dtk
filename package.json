@@ -1,0 +1,18 @@
+{
+	"name": "dtk",
+	"version": "0.1.0",
+	"author": {
+		"email": "danko@very.lv",
+		"name": "Danko Alexeyev",
+		"url": "http://very.lv"
+	},
+	"description": "TypeScript DOM Toolkit",
+	"main": "./dtk.js",
+	"types": "./dtk.ts",
+	"module": "./dtk.js",
+	"repository": {
+		"url": "https://bitbucket.org/verypositive/dtk",
+		"type": "hg"
+	},
+	"license": "MIT"
+}
