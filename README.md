@@ -17,6 +17,7 @@ Here's [a codepen](https://codepen.io/virtulis/pen/bKwEpq) with a few examples.
    * [`get()` and `list()`](#get-and-list)
    * [`create()`](#create)
    * [`prop()`](#prop)
+   * [`attr()`](#attr)
    * [`append()`](#append)
    * [`on()`](#on)
  - [Feedback](#feedback)
@@ -98,6 +99,14 @@ A special key `$` can be used to set attributes too
         stroke: 'black',
         'stroke-width': 1,
     }});
+
+### `attr()`
+
+Sets element's attribute or attributes, or returns a value of a single attribute.
+
+    attr(el, name); // returns value of attribute
+    attr(el, name, value); // sets value of attribute
+    attr(el, { n1: v1, n2: v2 }); // sets multiple attributes
 
 ### `append()`
 
