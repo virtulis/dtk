@@ -12,7 +12,7 @@ export function get<
 export function get(
 	el: Element,
 	selectors?: string
-): DTKElement | null;
+): HTMLElement | null;
 
 export function get<
 	TN extends keyof HTMLElementTagNameMap,
@@ -23,7 +23,7 @@ export function get<
 ): T | null;
 export function get(
 	selectors?: string
-): DTKElement | null;
+): HTMLElement | null;
 
 export function get(
 	arg1?: Element | string,

@@ -12,7 +12,7 @@ export function list<
 export function list(
 	el: Element,
 	selectors?: string
-): DTKElement[];
+): HTMLElement[];
 
 export function list<
 	TN extends keyof HTMLElementTagNameMap,
@@ -23,7 +23,7 @@ export function list<
 ): T[];
 export function list(
 	selectors?: string
-): DTKElement[];
+): HTMLElement[];
 
 export function list(
 	arg1?: Element | string,
