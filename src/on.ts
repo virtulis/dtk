@@ -1,7 +1,7 @@
 import { DTKElement } from './impl/element';
 
 export interface EventTargetFix<T = DTKElement> {
-	target: DTKElement;
+	target: T;
 }
 
 export type EventWithFixedTarget<T = DTKElement> = Event & EventTargetFix<T>;
