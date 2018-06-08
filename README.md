@@ -12,19 +12,15 @@ Here's [a codepen](https://codepen.io/virtulis/pen/bKwEpq) with a few examples.
 
 #### Table of contents
 
-<!-- toc -->
-
-- [Installation and usage](#installation-and-usage)
-- [Methods](#methods)
-  * [`get()` and `list()`](#get-and-list)
-  * [`create()`](#create)
-  * [`prop()`](#prop)
-  * [`append()`](#append)
-  * [`on()`](#on)
-- [Feedback](#feedback)
-- [License](#license)
-
-<!-- tocstop -->
+ - [Installation and usage](#installation-and-usage)
+ - [Methods](#methods)
+   * [`get()` and `list()`](#get-and-list)
+   * [`create()`](#create)
+   * [`prop()`](#prop)
+   * [`append()`](#append)
+   * [`on()`](#on)
+ - [Feedback](#feedback)
+ - [License](#license)
 
 ## Installation and usage
 
