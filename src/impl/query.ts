@@ -1,19 +1,21 @@
+import { DTKElement } from './element';
+
 function invokeQuery(
 	el: Element,
 	all: boolean,
 	trs: string | string[]
-): HTMLElement | HTMLElement[] | null {
+): DTKElement | DTKElement[] | null {
 
 	const joined = typeof trs == 'string';
 
 	if (trs[0] != '>') {
 		const jtrs = joined ? trs as string : (trs as string[]).join(' ');
 		return all
-			? Array.from(el.querySelectorAll(jtrs)) as HTMLElement[]
-			: el.querySelector(jtrs) as HTMLElement | null;
+			? Array.from(el.querySelectorAll(jtrs)) as DTKElement[]
+			: el.querySelector(jtrs) as DTKElement | null;
 	}
 
-	let out: HTMLElement[] = [];
+	let out: DTKElement[] = [];
 
 	const split = joined ? (trs as string).substr(1).trim().split(' ') : (trs as string[]).slice(1);
 	const top = split[0];
@@ -24,13 +26,13 @@ function invokeQuery(
 		const child = children[i];
 		if (!child.matches(top)) continue;
 		if (!rest) {
-			if (!all) return child as HTMLElement;
-			out.push(child as HTMLElement);
+			if (!all) return child as DTKElement;
+			out.push(child as DTKElement);
 		}
 		else {
 			const match = invokeQuery(child, all, rest);
 			if (!match) continue;
-			if (all) for (let gc of (match as HTMLElement[])) out.push(gc);
+			if (all) for (let gc of (match as DTKElement[])) out.push(gc);
 			else return match;
 		}
 	}
@@ -44,13 +46,13 @@ export function query(
 	arg1?: Element | string,
 	arg2?: string,
 	arg3?: string
-): HTMLElement[];
+): DTKElement[];
 export function query(
 	all: false,
 	arg1?: Element | string,
 	arg2?: string,
 	arg3?: string
-): HTMLElement | null;
+): DTKElement | null;
 export function query(
 	all: boolean,
 	arg1?: Element | string,

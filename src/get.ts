@@ -1,4 +1,5 @@
 import { query } from './impl/query';
+import { DTKElement } from './impl/element';
 
 export function get<
 	TN extends keyof HTMLElementTagNameMap,
@@ -11,7 +12,7 @@ export function get<
 export function get(
 	el: Element,
 	selectors?: string
-): HTMLElement | null;
+): DTKElement | null;
 
 export function get<
 	TN extends keyof HTMLElementTagNameMap,
@@ -22,12 +23,12 @@ export function get<
 ): T | null;
 export function get(
 	selectors?: string
-): HTMLElement | null;
+): DTKElement | null;
 
 export function get(
 	arg1?: Element | string,
 	arg2?: string,
 	arg3?: string
-): HTMLElement | null {
+): DTKElement | null {
 	return query(false, arg1, arg2, arg3);
 }
