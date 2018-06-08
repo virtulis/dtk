@@ -4,4 +4,5 @@ util/
 tsconfig.json
 webpack.config.js
 .hgignore
-dtk-*.gz
+.idea
+*.tgz
