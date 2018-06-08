@@ -1,10 +1,12 @@
-export interface EventTargetFix {
-	target: HTMLElement;
+import { DTKElement } from './impl/element';
+
+export interface EventTargetFix<T = DTKElement> {
+	target: DTKElement;
 }
 
-export type EventWithFixedTarget = Event & EventTargetFix;
+export type EventWithFixedTarget<T = DTKElement> = Event & EventTargetFix<T>;
 
-export type BasicHandler = (e: EventWithFixedTarget) => void;
+export type BasicHandler<T = DTKElement> = (e: EventWithFixedTarget<T>) => void;
 export type HandlerRemover = () => void;
 
 export interface HandlerOptions extends AddEventListenerOptions {
@@ -18,7 +20,7 @@ export function on<
 >(
 	el: SVGElement,
 	event: EN,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<SVGElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -28,7 +30,7 @@ export function on<
 	el: SVGElement,
 	event: EN,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<SVGElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -38,7 +40,7 @@ export function on<
 	el: SVGElement,
 	event: EN,
 	filter: string,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<SVGElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -49,27 +51,27 @@ export function on<
 	event: EN,
 	filter: string,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<SVGElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: SVGElement,
 	event: string,
-	handler: BasicHandler,
+	handler: BasicHandler<SVGElement>,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: SVGElement,
 	event: string,
 	object: object,
-	handler: BasicHandler | string,
+	handler: BasicHandler<SVGElement> | string,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: SVGElement,
 	event: string,
 	filter: string,
-	handler: BasicHandler,
+	handler: BasicHandler<SVGElement>,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
@@ -77,7 +79,7 @@ export function on(
 	event: string,
 	filter: string,
 	object: object,
-	handler: BasicHandler | string,
+	handler: BasicHandler<SVGElement> | string,
 	options?: HandlerOptions
 ): HandlerRemover;
 
@@ -87,7 +89,7 @@ export function on<
 >(
 	el: EventTarget,
 	event: EN,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -97,7 +99,7 @@ export function on<
 	el: EventTarget,
 	event: EN,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -107,7 +109,7 @@ export function on<
 	el: EventTarget,
 	event: EN,
 	filter: string,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -118,27 +120,27 @@ export function on<
 	event: EN,
 	filter: string,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: EventTarget,
 	event: string,
-	handler: BasicHandler,
+	handler: BasicHandler<HTMLElement>,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: EventTarget,
 	event: string,
 	object: object,
-	handler: BasicHandler | string,
+	handler: BasicHandler<HTMLElement> | string,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
 	el: EventTarget,
 	event: string,
 	filter: string,
-	handler: BasicHandler,
+	handler: BasicHandler<HTMLElement>,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
@@ -146,7 +148,7 @@ export function on(
 	event: string,
 	filter: string,
 	object: object,
-	handler: BasicHandler | string,
+	handler: BasicHandler<HTMLElement> | string,
 	options?: HandlerOptions
 ): HandlerRemover;
 
@@ -155,7 +157,7 @@ export function on<
 	ET extends HTMLElementEventMap[EN]
 >(
 	event: EN,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -164,7 +166,7 @@ export function on<
 >(
 	event: EN,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -173,7 +175,7 @@ export function on<
 >(
 	event: EN,
 	filter: string,
-	handler: (e: ET & EventTargetFix) => void,
+	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
@@ -183,7 +185,7 @@ export function on<
 	event: EN,
 	filter: string,
 	object: object,
-	method: (e: ET & EventTargetFix) => void,
+	method: (e: ET & EventTargetFix<HTMLElement>) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on(
