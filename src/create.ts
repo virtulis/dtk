@@ -11,7 +11,7 @@ export function create<
 	tag: TN,
 	clsOrProps?: string | PropMap<T>,
 	...children: Appendable[]
-): SVGElementTagNameMap[TN];
+): T;
 export function create<
 	TN extends keyof HTMLElementTagNameMap,
 	T extends HTMLElementTagNameMap[TN]
@@ -19,7 +19,7 @@ export function create<
 	tag: TN,
 	clsOrProps?: string | PropMap<T>,
 	...children: Appendable[]
-): HTMLElementTagNameMap[TN];
+): T;
 export function create(
 	tag: string,
 	clsOrProps?: string | PropMap<any>,
