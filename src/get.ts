@@ -13,7 +13,7 @@ export function get<
 	TN extends keyof DTKElementTagNameMap | string,
 	T extends (TN extends keyof DTKElementTagNameMap ? DTKElementTagNameMap[TN] : HTMLElement)
 >(
-	tag: TN,
+	tag?: TN,
 	selectors?: string
 ): T | null;
 
