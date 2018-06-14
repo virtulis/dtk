@@ -1,4 +1,4 @@
-import * as dtk from '../dist/dtk';
+import * as dtk from '../src/dtk';
 const { create, get, list, on, append, attr, prop } = dtk;
 (window as any).dtk = dtk; // so you can play in console
 
