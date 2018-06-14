@@ -1,38 +1,18 @@
 import { svgTags } from './data/svgtags';
 import { prop, PropMap } from './prop';
 import { append, Appendable } from './append';
+import { DTKElementTagNameMap } from './impl/types';
 
 const svgNS = 'http://www.w3.org/2000/svg';
 
 export function create<
-	TN extends keyof SVGElementTagNameMap,
-	T extends SVGElementTagNameMap[TN]
+	TN extends keyof DTKElementTagNameMap | string,
+	T extends (TN extends keyof DTKElementTagNameMap ? DTKElementTagNameMap[TN] : Element)
 >(
 	tag: TN,
 	clsOrProps?: string | PropMap<T>,
 	...children: Appendable[]
-): T;
-export function create<
-	TN extends keyof HTMLElementTagNameMap,
-	T extends HTMLElementTagNameMap[TN]
->(
-	tag: TN,
-	clsOrProps?: string | PropMap<T>,
-	...children: Appendable[]
-): T;
-export function create(
-	tag: string,
-	clsOrProps?: string | PropMap<any>,
-	...children: Appendable[]
-): HTMLElement;
-export function create<
-	TN extends keyof (HTMLElementTagNameMap & SVGElementTagNameMap),
-	T extends (HTMLElementTagNameMap & SVGElementTagNameMap)[TN]
->(
-	tag: TN,
-	clsOrProps?: string | PropMap<T>,
-	...children: Appendable[]
-) {
+): T {
 
 	const svg = svgTags[tag];
 	const el = (svg ? document.createElementNS(svgNS, tag) : document.createElement(tag)) as T;

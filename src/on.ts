@@ -1,12 +1,17 @@
-import { DTKElement } from './impl/element';
+export type EventName<ElT> = (
+	(ElT extends HTMLElement ? keyof HTMLElementEventMap : never) |
+	(ElT extends SVGElement ? keyof SVGElementEventMap : never) |
+	string
+);
 
-export interface EventTargetFix<T = DTKElement> {
-	target: T;
-}
+export type EventTargetFix = { target: Element };
+export type EventType<EvN> = (
+	(EvN extends keyof HTMLElementEventMap ? HTMLElementEventMap[EvN] : never) |
+	(EvN extends keyof SVGElementEventMap ? SVGElementEventMap[EvN] : never) |
+	Event
+) & EventTargetFix;
 
-export type EventWithFixedTarget<T = DTKElement> = Event & EventTargetFix<T>;
-
-export type BasicHandler<T = DTKElement> = (e: EventWithFixedTarget<T>) => void;
+export type BasicHandler = (e: Event) => void;
 export type HandlerRemover = () => void;
 
 export interface HandlerOptions extends AddEventListenerOptions {
@@ -14,202 +19,144 @@ export interface HandlerOptions extends AddEventListenerOptions {
 	stop?: boolean;
 }
 
+// 2 * 2 * 3 = 12 overloads
+// (el | no el) * (filter | no filter) * (object + string | object + method | handler)
+
+// el, filter
 export function on<
-	EN extends keyof SVGElementEventMap,
-	ET extends SVGElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	el: SVGElement,
-	event: EN,
-	handler: (e: ET & EventTargetFix<SVGElement>) => void,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on<
-	EN extends keyof SVGElementEventMap,
-	ET extends SVGElementEventMap[EN]
->(
-	el: SVGElement,
-	event: EN,
-	object: object,
-	method: (e: ET & EventTargetFix<SVGElement>) => void,
+	el: ElT,
+	event: EvN,
+	filter: string,
+	object: OT,
+	method: keyof OT,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof SVGElementEventMap,
-	ET extends SVGElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	el: SVGElement,
-	event: EN,
+	el: ElT,
+	event: EvN,
 	filter: string,
-	handler: (e: ET & EventTargetFix<SVGElement>) => void,
+	object: OT,
+	method: (this: OT, e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof SVGElementEventMap,
-	ET extends SVGElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
 >(
-	el: SVGElement,
-	event: EN,
+	el: ElT,
+	event: EvN,
 	filter: string,
-	object: object,
-	method: (e: ET & EventTargetFix<SVGElement>) => void,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: SVGElement,
-	event: string,
-	handler: BasicHandler<SVGElement>,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: SVGElement,
-	event: string,
-	object: object,
-	handler: BasicHandler<SVGElement> | string,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: SVGElement,
-	event: string,
-	filter: string,
-	handler: BasicHandler<SVGElement>,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: SVGElement,
-	event: string,
-	filter: string,
-	object: object,
-	handler: BasicHandler<SVGElement> | string,
+	handler: (e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 
+// el, no filter
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	el: EventTarget,
-	event: EN,
-	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
->(
-	el: EventTarget,
-	event: EN,
-	object: object,
-	method: (e: ET & EventTargetFix<HTMLElement>) => void,
+	el: ElT,
+	event: EvN,
+	object: OT,
+	method: keyof OT,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	el: EventTarget,
-	event: EN,
-	filter: string,
-	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
+	el: ElT,
+	event: EvN,
+	object: OT,
+	method: (this: OT, e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	ElT extends EventTarget,
+	EvN extends EventName<ElT>,
+	EvT extends EventType<EvN>,
 >(
-	el: EventTarget,
-	event: EN,
-	filter: string,
-	object: object,
-	method: (e: ET & EventTargetFix<HTMLElement>) => void,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: EventTarget,
-	event: string,
-	handler: BasicHandler<HTMLElement>,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: EventTarget,
-	event: string,
-	object: object,
-	handler: BasicHandler<HTMLElement> | string,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: EventTarget,
-	event: string,
-	filter: string,
-	handler: BasicHandler<HTMLElement>,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	el: EventTarget,
-	event: string,
-	filter: string,
-	object: object,
-	handler: BasicHandler<HTMLElement> | string,
+	el: ElT,
+	event: EvN,
+	handler: (e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 
+// no el, filter
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	event: EN,
-	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
->(
-	event: EN,
-	object: object,
-	method: (e: ET & EventTargetFix<HTMLElement>) => void,
+	event: EvN,
+	filter: string,
+	object: OT,
+	method: keyof OT,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
+	OT extends object,
 >(
-	event: EN,
+	event: EvN,
 	filter: string,
-	handler: (e: ET & EventTargetFix<HTMLElement>) => void,
+	object: OT,
+	method: (this: OT, e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 export function on<
-	EN extends keyof HTMLElementEventMap,
-	ET extends HTMLElementEventMap[EN]
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
 >(
-	event: EN,
+	event: EvN,
 	filter: string,
-	object: object,
-	method: (e: ET & EventTargetFix<HTMLElement>) => void,
+	handler: (e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
-export function on(
-	event: string,
-	handler: BasicHandler,
+
+// no el, no filter
+export function on<
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
+	OT extends object,
+>(
+	event: EvN,
+	object: OT,
+	method: keyof OT,
 	options?: HandlerOptions
 ): HandlerRemover;
-export function on(
-	event: string,
-	object: object,
-	handler: BasicHandler | string,
+export function on<
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
+	OT extends object,
+>(
+	event: EvN,
+	object: OT,
+	method: (this: OT, e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
-export function on(
-	event: string,
-	filter: string,
-	handler: BasicHandler,
-	options?: HandlerOptions
-): HandlerRemover;
-export function on(
-	event: string,
-	filter: string,
-	object: object,
-	handler: BasicHandler | string,
+export function on<
+	EvN extends (keyof HTMLElementEventMap) | string,
+	EvT extends EventType<EvN>,
+>(
+	event: EvN,
+	handler: (e: EvT) => void,
 	options?: HandlerOptions
 ): HandlerRemover;
 
@@ -222,7 +169,7 @@ export function on(...args: any[]): HandlerRemover {
 
 	let final: BasicHandler;
 	if (filter) {
-		final = function (e: EventWithFixedTarget) {
+		final = function (e: Event) {
 			if (!(e.target instanceof Element)) return;
 			if (!e.target.closest(filter)) return;
 			if (options && options.stop) e.stopPropagation();
@@ -231,7 +178,7 @@ export function on(...args: any[]): HandlerRemover {
 		};
 	}
 	else if (options && (options.prevent || options.stop)) {
-		final = function (e: EventWithFixedTarget) {
+		final = function (e: Event) {
 			if (options.stop) e.stopPropagation();
 			if (options.prevent) e.preventDefault();
 			handler(e);

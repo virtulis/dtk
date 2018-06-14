@@ -1,11 +1,10 @@
 import { attr, AttrMap } from './attr';
-import { DTKElement } from './impl/element';
 
 export type AttrProp = { $?: AttrMap };
 export type PropMap<T> = ({ [key in keyof T]?: T[key] } & AttrProp);
 
 export function prop<
-	T extends DTKElement,
+	T extends Element,
 	K extends keyof T
 >(
 	el: T,
@@ -13,39 +12,39 @@ export function prop<
 	val: T[K]
 ): void;
 export function prop<
-	T extends DTKElement,
+	T extends Element,
 	K extends keyof T
 >(
 	el: T,
 	prop: K
 ): T[K];
 export function prop<
-	T extends DTKElement
+	T extends Element
 >(
 	el: T,
 	prop: string,
 	val: any
 ): void
 export function prop<
-	T extends DTKElement
+	T extends Element
 	>(
 	el: T,
 	prop: string
 ): any;
 export function prop<
-	T extends DTKElement
+	T extends Element
 >(
 	el: T,
 	props: PropMap<T>,
 ): void;
 export function prop<
-	T extends DTKElement
+	T extends Element
 >(
 	el: T,
 	props: { [_: string]: any }
 ): void;
 export function prop<
-	T extends DTKElement
+	T extends Element
 >(
 	el: T,
 	props: string | PropMap<T>,

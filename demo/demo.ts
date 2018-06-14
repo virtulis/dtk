@@ -24,10 +24,10 @@ on(btn, 'click', () => {
 		get('> div > *, script, p, h1'),
 		list()
 	];
-	const show = (el: HTMLElement | SVGElement) => el.tagName.toLowerCase()
-		+ '.' + (
-			(el.className instanceof SVGAnimatedString ? el.className.baseVal : el.className) || '*'
-		);
+	const show = (el: Element) => {
+		const cls = el.className as any;
+		return el.tagName.toLowerCase() + '.' + (cls instanceof SVGAnimatedString ? cls.baseVal : cls || '*');
+	};
 	for (let ex of examples) {
 		const txt = Array.isArray(ex)
 			? '[' + ex.map(show).join(', ') + ']'
@@ -49,13 +49,13 @@ append(lol, create(
 	'svg',
 	{ $: { width: 60, height: 20 } },
 	colors.map((c, i) => create('circle', { $: {
-			cx: 10 + 20 * i,
-			cy: 10,
-			r: 8,
-			stroke: 'black',
-			'stroke-width': 1,
-			fill: c
-		}}))
+		cx: 10 + 20 * i,
+		cy: 10,
+		r: 8,
+		stroke: 'black',
+		'stroke-width': 1,
+		fill: c
+	}}))
 ));
 on('click', 'circle', e => {
 	attr(
