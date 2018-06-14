@@ -1,14 +1,9 @@
-export type EventName<ElT> = (
-	(ElT extends HTMLElement ? keyof HTMLElementEventMap : never) |
-	(ElT extends SVGElement ? keyof SVGElementEventMap : never) |
-	string
-);
+export type EventName<ElT> = (keyof (ElT extends SVGElement ? SVGElementEventMap : HTMLElementEventMap)) | string;
 
 export type EventTargetFix = { target: Element };
-export type EventType<EvN> = (
-	(EvN extends keyof HTMLElementEventMap ? HTMLElementEventMap[EvN] : never) |
-	(EvN extends keyof SVGElementEventMap ? SVGElementEventMap[EvN] : never) |
-	Event
+export type EventType<EvN> = (EvN extends keyof HTMLElementEventMap
+	? HTMLElementEventMap[EvN]
+	: (EvN extends keyof SVGElementEventMap ? SVGElementEventMap[EvN] : Event)
 ) & EventTargetFix;
 
 export type BasicHandler = (e: Event) => void;
