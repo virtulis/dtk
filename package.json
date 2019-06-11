@@ -1,10 +1,10 @@
 {
 	"name": "dtk",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"author": {
 		"email": "danko@very.lv",
-		"name": "Danko Alexeyev",
-		"url": "http://very.lv"
+		"name": "Danko Aleksejevs",
+		"url": "http://kludge.guru"
 	},
 	"description": "TypeScript DOM Toolkit",
 	"keywords": ["dom", "queryselector"],

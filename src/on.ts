@@ -14,6 +14,15 @@ export interface HandlerOptions extends AddEventListenerOptions {
 	stop?: boolean;
 }
 
+function isEventTarget(el: any): el is EventTarget {
+	if ((window as any).EventTarget) {
+		return el instanceof EventTarget;
+	}
+	else {
+		return typeof el.addEventListener == 'function';
+	}
+}
+
 // 2 * 2 * 3 = 12 overloads
 // (el | no el) * (filter | no filter) * (object + string | object + method | handler)
 
@@ -157,7 +166,7 @@ export function on<
 
 export function on(...args: any[]): HandlerRemover {
 
-	const el = args[0] instanceof EventTarget ? args.shift() as Element : window;
+	const el = isEventTarget(args[0]) ? args.shift() as EventTarget : window;
 	const event = args.shift() as string;
 	const filter = typeof args[0] == 'string' ? args.shift() as string : null;
 	const [handler, options] = makeHandler(args[0], args[1], args[2]);
