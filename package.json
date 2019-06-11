@@ -7,7 +7,10 @@
 		"url": "http://kludge.guru"
 	},
 	"description": "TypeScript DOM Toolkit",
-	"keywords": ["dom", "queryselector"],
+	"keywords": [
+		"dom",
+		"queryselector"
+	],
 	"main": "./dist/dtk.js",
 	"types": "./dist/dtk.d.ts",
 	"module": "./dist/dtk.mjs",
@@ -16,8 +19,8 @@
 		"prepare": "npm run build"
 	},
 	"repository": {
-		"url": "https://bitbucket.org/verypositive/dtk",
-		"type": "hg"
+		"url": "https://github.com/virtulis/dtk",
+		"type": "git"
 	},
 	"license": "MIT",
 	"devDependencies": {
