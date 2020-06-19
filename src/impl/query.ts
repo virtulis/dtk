@@ -9,7 +9,7 @@ function invokeQuery(
 	if (trs[0] != '>') {
 		const jtrs = joined ? trs as string : (trs as string[]).join(' ');
 		return all
-			? Array.from(el.querySelectorAll(jtrs)) as Element[]
+			? [].slice.call(el.querySelectorAll(jtrs)) as Element[]
 			: el.querySelector(jtrs) as Element | null;
 	}
 
@@ -127,7 +127,10 @@ export function query(
 	if (!all) return null;
 
 	if (ress.length == 1) return ress[0];
-	else if (!ress.length) return [];
-	else return Array.from(new Set(([] as Element[]).concat(...ress)));
+	if (!ress.length) return [];
+	
+	return ([] as Element[]).concat(...ress).filter(function (x, i, a) {
+		return a.indexOf(x) == i;
+	});
 
 }
