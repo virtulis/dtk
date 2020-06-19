@@ -209,7 +209,7 @@ export function on(...args: any[]): HandlerRemover {
 type MakeHandlerArg = BasicHandler | object | void | string | HandlerOptions;
 function makeHandler(arg1: MakeHandlerArg, arg2: MakeHandlerArg, arg3?: MakeHandlerArg): [BasicHandler, HandlerOptions | undefined] {
 	if (!arg1) throw new TypeError('No handler passed to on()');
-	if (typeof arg1 == 'function') return [arg1, arg2 as HandlerOptions || undefined];
+	if (typeof arg1 == 'function') return [arg1 as BasicHandler, arg2 as HandlerOptions || undefined];
 	if (!arg2) throw new TypeError('Just the object passed to on()');
 	const hdl = typeof arg2 == 'string' ? (arg1 as any)[arg2] : arg2;
 	if (typeof hdl != 'function') throw new TypeError('Invalid handler passed to on()');
