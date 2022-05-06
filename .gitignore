@@ -3,3 +3,7 @@ node_modules
 package-lock.json
 
 dist
+
+demo/demo.js*
+src/*.js
+src/*.js.map
