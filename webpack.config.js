@@ -1,5 +1,7 @@
+const { resolve } = require('path');
+
 module.exports = {
-	entry: './dist/global.mjs',
+	entry: resolve(__dirname, './dist/global.mjs'),
 	output: {
 		filename: 'dtk.bundle.js',
 		path: __dirname + '/dist',

@@ -15,12 +15,7 @@ export interface HandlerOptions extends AddEventListenerOptions {
 }
 
 function isEventTarget(el: any): el is EventTarget {
-	if ((window as any).EventTarget) {
-		return el instanceof EventTarget;
-	}
-	else {
-		return typeof el.addEventListener == 'function';
-	}
+	return typeof el.addEventListener == 'function';
 }
 
 // 2 * 2 * 3 = 12 overloads
@@ -174,8 +169,7 @@ export function on(...args: any[]): HandlerRemover {
 	let final: BasicHandler;
 	if (filter) {
 		final = function (e: Event) {
-			if (!(e.target instanceof Element)) return;
-			if (!e.target.closest(filter)) return;
+			if (!(e.target as Element)?.closest?.(filter)) return;
 			if (options && options.stop) e.stopPropagation();
 			if (options && options.prevent) e.preventDefault();
 			handler(e);

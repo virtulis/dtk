@@ -1,6 +1,6 @@
 {
 	"name": "dtk",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"author": {
 		"email": "danko@very.lv",
 		"name": "Danko Aleksejevs",
@@ -16,6 +16,7 @@
 	"module": "./dist/dtk.mjs",
 	"scripts": {
 		"build": "npx tsc-both && npx webpack",
+		"build-demo": "npx tsc -p ./demo && npx webpack -c ./demo/webpack.config.js",
 		"prepare": "npm run build"
 	},
 	"repository": {
@@ -24,10 +25,10 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"source-map-loader": "^1.1.1",
+		"source-map-loader": "^3.0.1",
 		"tsc-both": "0.2.x",
-		"typescript": "^4.0.3",
-		"webpack": "^5.1.3",
-		"webpack-cli": "^4.1.0"
+		"typescript": "^4.6.4",
+		"webpack": "^5.72.0",
+		"webpack-cli": "^4.9.2"
 	}
 }

@@ -1,5 +1,7 @@
+const { resolve } = require('path');
+
 module.exports = {
-	entry: './demo.js',
+	entry: resolve(__dirname, './demo.js'),
 	output: {
 		filename: 'demo.bundle.js',
 		path: __dirname,
