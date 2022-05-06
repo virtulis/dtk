@@ -1,4 +1,4 @@
-import { svgTags } from './data/svgtags';
+import { isSvgTag } from './data/svgtags';
 import { prop, PropMap } from './prop';
 import { append, Appendable } from './append';
 import { DTKElementTagNameMap } from './impl/types';
@@ -14,7 +14,7 @@ export function create<
 	...children: Appendable[]
 ): T {
 
-	const svg = svgTags[tag];
+	const svg = isSvgTag(tag);
 	const el = (svg ? document.createElementNS(svgNS, tag) : document.createElement(tag)) as T;
 
 	if (typeof clsOrProps == 'string') el.setAttribute('class', clsOrProps);
